@@ -1,1 +1,5 @@
-"# tl2-tp1-2023-SimonMontenegro1001" 
+### Punto 2.a
+
+## Respuestas:
+
+...🫥
