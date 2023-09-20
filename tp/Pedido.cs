@@ -1,21 +1,29 @@
+
 namespace Name
 {
     public enum EstadoPedido
     {
         Pendiente,
         Entregado,
-        Cancelado
+        Cancelado,
+        NoAsignado
     }
     public class Pedido
     {
         public int Nro { get; set; }
         public Cliente Cliente { get; set; }
         public EstadoPedido Estado { get; private set; }
+        public Cadete? Cadete { get; private set; }
         public Pedido(Cliente cliente, int nro)
         {
             // Agregar control control para datos vacios y nulos
             Cliente = cliente;
             Nro = nro;
+            Estado = EstadoPedido.NoAsignado;
+        }
+        public void AsignarCadete(Cadete cadete)
+        {
+            if (cadete != null) Cadete = cadete;
             Estado = EstadoPedido.Pendiente;
         }
         public void Cancelar()
@@ -25,12 +33,13 @@ namespace Name
         public void Entregar()
         {
             Estado = EstadoPedido.Entregado;
+            if (Cadete != null) Cadete.CantidadDePedidosEntregados++;
         }
-        public string VerDatosCliente()
+        public string DatosCliente()
         {
             return $"Nombre: {Cliente.Nombre} \nTeléfono: {Cliente.Telefono}";
         }
-        public string VerDireccionCliente()
+        public string DireccionCliente()
         {
             if (string.IsNullOrWhiteSpace(Cliente.DatosReferenciaDireccion))
             {
@@ -41,5 +50,6 @@ namespace Name
                 return $"Direccion: {Cliente.Direccion} [{Cliente.DatosReferenciaDireccion}]";
             }
         }
+
     }
 }
